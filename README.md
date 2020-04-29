@@ -1,2 +1,0 @@
-# RepositoryKuda
-Scripts and code
