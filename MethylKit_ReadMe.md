@@ -1,4 +1,4 @@
-Input file is a methylation call file from aligner pipeline or generic text file with aligner output format:
+Input file is a methylation call file from aligner pipeline or **tab separated** generic text file with aligner output format:
 chrBase chr base strand coverage freqC freqT
 
 Step 1: Create a list containing all the input files which will be fed into the script.
@@ -23,7 +23,7 @@ Step 4: Tiling window analysis
 	Summarizes methylation information over tiling windows vs base-pair resolution analysis.
 	TileMethylCounts() functions
 		win.size
-		step.size        **We won't know where exactly each tile is.
+		step.size        **We won't know where exactly each tile is.**.
 	These tiles can be loaded into Unite & CalculateDiffMeth functions
 
 Step 5: Finding differentially methylated bases/regions
@@ -42,5 +42,3 @@ Step 6: Annotation
 	Read in gene BED file
 	ReadGeneric() function
 		inputs genomic data and converts it to a GRanges object
-
-	
