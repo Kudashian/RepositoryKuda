@@ -28,26 +28,28 @@ Mixmodel_myMethylatedRegions = myDiff.to.mixmdl(myMethylatedRegions, plot = FALS
 ##########################################Weighted Cost Function and Bimordal normal distribution plots########################################################################
 plotMdl1(Mixmodel_myMethylatedRegions, subtitle = "Bimordal normal distribution")
 plotCost(Mixmodel_myMethylatedRegions, main = "Weighted Cost Function")
+#################################Create eDMR object of class GRanges - Defining DMR candidates#################################################################################
+
+myDiffMethylatedRegions = edmr(myMethylatedRegions,
+                                    step = 100,                                                                         ##Numerical value for calculating auto-correlation
+                                      dist = "none",                                                                 ##Distance cut-off to call a gap for DMR. Default none=automatically determined by bimodal normal distribution
+                                        DMC.qvalue = 0.01,                                                         ##Qvalue cutoff for DMC definition
+                                          DMC.methdiff = 25,                                                     ##Methylation difference cutoff for DMC definition
+                                            num.DMCs = 1,                                                      ##Cutoff of the number of DMCs in each region to call DMR
+                                              num.CpGs = 3,                                                  ##Cutoff number of CpGs
+                                                DMR.methdiff = 20,                                         ##Cutoff of the DMR mean methylation difference
+                                                  plot = TRUE,
+                                                    main = "Binomial Distribution of Example data",
+                                                      mode = 1,                                      ##Mode of call DMRS: 1. Using all CpGs together. 2. Use unidirectional CpGs to call DMRs
+                                                        ACF = TRUE,
+                                                          fuzzypval = 0.04)
+
 ##########################################Filter the DMRs#######################################################################
-Filtered_myMethylatedRegions = filter.dmr(Mixmodel_myMethylatedRegions,                                                    ##Filters significant DMRs
+Filtered_myMethylatedRegions = filter.dmr(myDiffMethylatedRegions,                                                    ##Filters significant DMRs
                                             DMR.qvalue = 0.01,                                                    ##Qvalue cutoff for DMC definition
                                                 mean.meth.diff = 20,                                              ##Cutoff of the DMR mean methylation difference
                                                     num.CpGs = 3,                                                 ##Cutoff no. of CpGs in each region to call DMR
                                                       num.DMCs = 3)                                               ##Cutoff no. of DMCs
-#################################Create eDMR object of class GRanges#################################################################################
-
-myDiffMethylatedRegions = edmr(myDiff, step = 100,                                       ##Numerical value for calculating auto-correlation
-          dist = "none",                                                                 ##Distance cut-off to call a gap for DMR. Default none=automatically determined by bimodal normal distribution
-              DMC.qvalue = 0.01,                                                         ##Qvalue cutoff for DMC definition
-                  DMC.methdiff = 25,                                                     ##Methylation difference cutoff for DMC definition
-                      num.DMCs = 1,                                                      ##Cutoff of the number of DMCs in each region to call DMR
-                          num.CpGs = 3,                                                  ##Cutoff number of CpGs
-                              DMR.methdiff = 20,                                         ##Cutoff of the DMR mean methylation difference
-                                  plot = TRUE,
-                                      main = "Binomial Distribution of Example data",
-                                          mode = 1,                                      ##Mode of call DMRS: 1. Using all CpGs together. 2. Use unidirectional CpGs to call DMRs
-                                              ACF = TRUE,
-                                                  fuzzypval = 0.04)
 
 ##########################################Annotate gene bodies using a bed file###############################################################################################
 
